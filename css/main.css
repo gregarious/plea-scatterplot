@@ -105,35 +105,37 @@ textarea {
     overflow: auto;
 }
 
-.tracker-row {
+.tracker-bucket {
     margin: 8px;
     height: 72px;
     border: 1px solid;
     font-size: 24px;
+
+    list-style: none;
 }
 
-.tracker-row > div {
+.tracker-bucket > div {
     height: 100%;
     float: left;
 }
 
-.tracker-row-current > .tracker-row-time {
+.tracker-bucket-current > .tracker-bucket-time {
     background-color: #ddc;
 }
 
-.tracker-row-current > .tracker-row-incidents {
+.tracker-bucket-current > .tracker-bucket-incidents {
     background-color: #ffe;   
 }
 
 
-.tracker-row-time {
+.tracker-bucket-time {
     padding-top: 24px;
     text-align: center;
     background-color: #ddd;
     width: 20%;
 }
 
-.tracker-row-incidents {
+.tracker-bucket-incidents {
     background-color: #fff;
     width: 80%;
 }

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]>    <html class="no-js iem7" data-ng-app=""> <![endif]-->
-<!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js" data-ng-app=""> <!--<![endif]-->
+<html data-ng-app="">
     <head>
         <meta charset="utf-8">
         <title></title>
@@ -38,124 +37,25 @@
         <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
 <!--         <link rel="stylesheet" href="css/bootstrap/bootstrap-responsive.min.css">
  -->
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <!--<script src="js/vendor/modernizr-2.6.2.min.js"></script>-->
     </head>
     <body>
-        <div class="app-container clearfix">
+        <div class="app-container clearfix" data-ng-controller="AppController">
             <div class="app-panel app-panel-left">
                 <div class="datebar">
                     <button class="btn">&lt;</button>
                     <span class="datebar-label-date">Today</span>
                     <button class="btn disabled">&gt;</button>
                 </div>
-                <div class="tracker">
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">8:30</div>
-                        <div class="tracker-row-incidents">
-                            <div class="behavior-incident behavior-incident-1">P</div>
-                            <div class="behavior-incident behavior-incident-2">HS</div>
+                <ul class="tracker">
+                    <li class="tracker-bucket clearfix" data-ng-repeat="timeRecord in timeRecords">
+                        <div class="tracker-bucket-time">{{timeRecord.iso_string}}</div>
+                        <div class="tracker-bucket-incidents">
+                            <!--<div class="behavior-incident behavior-incident-1">
+                            <div class="behavior-incident behavior-incident-2">-->
                         </div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">8:45</div>
-                        <div class="tracker-row-incidents">
-                            <div class="behavior-incident behavior-incident-2">HS</div>
-                            <div class="behavior-incident behavior-incident-3">L</div>
-                        </div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">9:00</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">9:15</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">9:30</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">9:45</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row tracker-row-current clearfix">
-                        <div class="tracker-row-time">10:00</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">10:15</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">10:30</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">10:45</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">11:00</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">11:15</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">11:30</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">11:45</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">12:00</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">12:15</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">12:30</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">12:45</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">1:00</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">1:15</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">1:30</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">1:45</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">2:00</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                    <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">2:15</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                        <div class="tracker-row clearfix">
-                        <div class="tracker-row-time">2:30</div>
-                        <div class="tracker-row-incidents"></div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
             <div class="app-panel app-panel-right">
                 <dl class="student-info well">
