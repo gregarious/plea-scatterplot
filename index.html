@@ -39,22 +39,21 @@
  -->
         <!--<script src="js/vendor/modernizr-2.6.2.min.js"></script>-->
     </head>
-    <body>
+    <body data-ng-controller="TrackerController">
         <div class="app-container clearfix">
-            <div class="app-panel app-panel-left" data-ng-controller="TrackerController">
+            <div class="app-panel app-panel-left">
                 <div class="datebar">
                     <button class="btn">&lt;</button>
                     <span class="datebar-label-date">Today</span>
                     <button class="btn disabled">&gt;</button>
                 </div>
                 <ul class="tracker">
-                    <li class="tracker-bucket clearfix" data-ng-repeat="timeRecord in timeRecords">
-                        <div class="tracker-bucket-time">{{timeRecord.iso_string}}</div>
+                    <li class="tracker-bucket clearfix" data-ng-repeat="timeIncidentsPair in timeIncidentsPairs">
+                        <div class="tracker-bucket-time">{{timeIncidentsPair.timeBucket.iso_string}}</div>
                         <ul class="tracker-bucket-incidents">
-                            <li 
-                                class="behavior-incident behavior-incident-{{incident.behaviorTypeId}}"
-                                data-ng-repeat="incident in behaviorRecords[$index]">
-                                {{behaviorTypes[incident.behaviorTypeId-1].code}}
+                            <li class="behavior-incident {{incident.cssClass}}"
+                                data-ng-repeat="incident in timeIncidentsPair.incidents">
+                                {{incident.behaviorType.code}}
                             </li>
                         </ul>
                     </li>
@@ -66,28 +65,21 @@
                     <dd>John Doe</dd>
 
                     <dt>Behaviors:</dt>
-                    <dd class="behavior-key">
-                        <div class="behavior-key-item behavior-key-item-1">
-                            <span class="behavior-key-letter">P</span>
-                            <span class="behavior-key-title">Pinch</span>
-                        </div>
-                        <div class="behavior-key-item behavior-key-item-2">
-                            <span class="behavior-key-letter">HS</span>
-                            <span class="behavior-key-title">Happy Slap</span>
-                        </div>
-                        <div class="behavior-key-item behavior-key-item-3">
-                            <span class="behavior-key-letter">L</span>
-                            <span class="behavior-key-title">Language</span>
-                        </div>
-                        <hr class="separator"/>
-                        <button class="behavior-key-item behavior-key-item-new">
-                            <span class="behavior-key-letter">+</span>
-                            <span class="behavior-key-title">New Behavior</span>
-                        </button>
+                    <dd class="behavior-keys">
+                        <ul>
+                            <li class="behavior-key-item {{behaviorType.cssClass}}"
+                                data-ng-repeat="behaviorType in behaviorTypes">
+                                <span class="behavior-key-letter">{{behaviorType.code}}</span>
+                                <span class="behavior-key-title">{{behaviorType.name}}</span>
+                            </li>
+                        </ul>
                     </dd>
                 </dl>
 
+                <hr class="separator"/>
+
                 <div class="views">
+                    <button class="btn-scatterplot btn btn-large">Edit Behaviors</button>
                     <button class="btn-scatterplot btn btn-large">View Month Scatterplot</button>
                 </div>
 
@@ -99,10 +91,15 @@
         <script src="js/vendor/zepto.min.js"></script>
         <script src="js/helper.js"></script>
 
+        <script src="js/vendor/underscore-min.js"></script>
+        <script src="js/vendor/backbone-min.js"></script>
+
         <script src="js/vendor/moment.min.js"></script>
         <script src="js/vendor/angular.js"></script>
 
-        <script src="js/main.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/services.js"></script>
+        <script src="js/controllers.js"></script>
 
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

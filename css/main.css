@@ -103,6 +103,8 @@ textarea {
 .tracker {
     height: 100%;
     overflow: auto;
+
+    margin: 0;
 }
 
 .tracker-bucket {
@@ -142,6 +144,8 @@ textarea {
 }
 
 .behavior-incident {
+    border-radius: 6px;
+
     display: inline-block;
     padding: 14px;
     margin-top: 12px;
@@ -150,6 +154,10 @@ textarea {
     color: #eee;
 
     list-style: none;
+}
+
+.behavior-keys > ul {
+    margin: 0;
 }
 
 .behavior-incident-1,
@@ -193,6 +201,8 @@ textarea {
     font-size: 24px;
     margin: 8px 0;
     padding: 14px;
+
+    list-style: none;
 }
 
 .behavior-key-item {
