@@ -67,12 +67,16 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-.app-container {
+body {
     width: 768px;
     height: 946px;
 
     margin-left: auto;
     margin-right: auto;
+}
+
+.app-container {
+    height: 100%;
 }
 
 .app-panel {
@@ -229,6 +233,10 @@ textarea {
     margin: 12px;
 }
 
+
+.navbar {
+    margin-bottom: 0;
+}
 
 /* ==========================================================================
    Helper classes

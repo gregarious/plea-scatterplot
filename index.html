@@ -33,14 +33,30 @@
         -->
 
         <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+        <link rel="stylesheet" href="css/main.css">
 <!--         <link rel="stylesheet" href="css/bootstrap/bootstrap-responsive.min.css">
  -->
         <!--<script src="js/vendor/modernizr-2.6.2.min.js"></script>-->
     </head>
-    <body data-ng-controller="TrackerController">
-        <div class="app-container clearfix">
+    <body>
+        <header>
+            <nav class="navbar">
+                <div class="navbar-inner">
+                    <ul class="nav nav-pills pull-right">
+                      <li class="active">
+                        <a href="#">Track</a>
+                      </li>
+                      <li class="divider-vertical"></li>
+                      <li><a href="#">Scatterplot</a></li>
+                      <li class="divider-vertical"></li>
+                      <li><a href="#">Behaviors</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <div class="app-container clearfix" data-ng-controller="TrackerController">
             <div class="app-panel app-panel-left">
                 <div class="datebar">
                     <button class="btn">&lt;</button>
@@ -48,7 +64,7 @@
                     <button class="btn disabled">&gt;</button>
                 </div>
                 <ul class="tracker">
-                    <li class="tracker-bucket clearfix" data-ng-repeat="timeIncidentsPair in timeIncidentsPairs">
+                    <li class="tracker-bucket clearfix" data-ng-repeat="timeIncidentsPair in timeIncidentsPairs" data-ng-click="addBehaviorIncident($index)">
                         <div class="tracker-bucket-time">{{timeIncidentsPair.timeBucket.iso_string}}</div>
                         <ul class="tracker-bucket-incidents">
                             <li class="behavior-incident {{incident.cssClass}}"
@@ -75,16 +91,9 @@
                         </ul>
                     </dd>
                 </dl>
-
-                <hr class="separator"/>
-
-                <div class="views">
-                    <button class="btn-scatterplot btn btn-large">Edit Behaviors</button>
-                    <button class="btn-scatterplot btn btn-large">View Month Scatterplot</button>
-                </div>
-
             </div>
         </div>
+
         <!-- Add your site or application content here -->
         <script src="js/vendor/bootstrap.js"></script>
 
