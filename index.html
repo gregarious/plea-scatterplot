@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="">
+<html data-ng-app="app">
     <head>
         <meta charset="utf-8">
         <title></title>
@@ -40,8 +40,8 @@
         <!--<script src="js/vendor/modernizr-2.6.2.min.js"></script>-->
     </head>
     <body>
-        <div class="app-container clearfix" data-ng-controller="AppController">
-            <div class="app-panel app-panel-left">
+        <div class="app-container clearfix">
+            <div class="app-panel app-panel-left" data-ng-controller="TrackerController">
                 <div class="datebar">
                     <button class="btn">&lt;</button>
                     <span class="datebar-label-date">Today</span>
@@ -50,10 +50,13 @@
                 <ul class="tracker">
                     <li class="tracker-bucket clearfix" data-ng-repeat="timeRecord in timeRecords">
                         <div class="tracker-bucket-time">{{timeRecord.iso_string}}</div>
-                        <div class="tracker-bucket-incidents">
-                            <!--<div class="behavior-incident behavior-incident-1">
-                            <div class="behavior-incident behavior-incident-2">-->
-                        </div>
+                        <ul class="tracker-bucket-incidents">
+                            <li 
+                                class="behavior-incident behavior-incident-{{incident.behaviorTypeId}}"
+                                data-ng-repeat="incident in behaviorRecords[$index]">
+                                {{behaviorTypes[incident.behaviorTypeId-1].code}}
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
@@ -99,7 +102,6 @@
         <script src="js/vendor/moment.min.js"></script>
         <script src="js/vendor/angular.js"></script>
 
-        <script src="js/data.js"></script>
         <script src="js/main.js"></script>
 
 

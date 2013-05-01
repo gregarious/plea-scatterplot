@@ -110,6 +110,8 @@ textarea {
     height: 72px;
     border: 1px solid;
     font-size: 24px;
+    
+    background-color: #fff;
 
     list-style: none;
 }
@@ -136,7 +138,6 @@ textarea {
 }
 
 .tracker-bucket-incidents {
-    background-color: #fff;
     width: 80%;
 }
 
@@ -147,6 +148,8 @@ textarea {
     margin-left: 20px;
 
     color: #eee;
+
+    list-style: none;
 }
 
 .behavior-incident-1,
