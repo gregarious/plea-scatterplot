@@ -64,12 +64,12 @@
                     <button class="btn disabled">&gt;</button>
                 </div>
                 <ul class="tracker">
-                    <li class="tracker-bucket clearfix" data-ng-repeat="timeIncidentsPair in timeIncidentsPairs" data-ng-click="addBehaviorIncident($index)">
-                        <div class="tracker-bucket-time">{{timeIncidentsPair.timeBucket.iso_string}}</div>
+                    <li class="tracker-bucket clearfix" data-ng-repeat="timeBucket in timeBuckets" data-ng-click="addBehaviorIncident(null, null)">
+                        <div class="tracker-bucket-time">{{timeBucket.timeRecord.get('iso_string')}}</div>
                         <ul class="tracker-bucket-incidents">
                             <li class="behavior-incident {{incident.cssClass}}"
-                                data-ng-repeat="incident in timeIncidentsPair.incidents">
-                                {{incident.behaviorType.code}}
+                                data-ng-repeat="incident in timeBucket.incidents">
+                                {{incident.get('behaviorType').get('code')}}
                             </li>
                         </ul>
                     </li>
@@ -84,9 +84,9 @@
                     <dd class="behavior-keys">
                         <ul>
                             <li class="behavior-key-item {{behaviorType.cssClass}}"
-                                data-ng-repeat="behaviorType in behaviorTypes">
-                                <span class="behavior-key-letter">{{behaviorType.code}}</span>
-                                <span class="behavior-key-title">{{behaviorType.name}}</span>
+                                data-ng-repeat="behaviorType in behaviors">
+                                <span class="behavior-key-letter">{{behaviorType.model.get('code')}}</span>
+                                <span class="behavior-key-title">{{behaviorType.model.get('name')}}</span>
                             </li>
                         </ul>
                     </dd>
@@ -102,6 +102,7 @@
 
         <script src="js/vendor/underscore-min.js"></script>
         <script src="js/vendor/backbone-min.js"></script>
+        <script src="js/vendor/backbone-relational.js"></script>
 
         <script src="js/vendor/moment.min.js"></script>
         <script src="js/vendor/angular.js"></script>

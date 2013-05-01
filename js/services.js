@@ -1,61 +1,95 @@
 app.service('dataService', function() {
+	var DayRecord = Backbone.RelationalModel.extend({});
+	var TimeRecord = Backbone.RelationalModel.extend({});
+	var BehaviorType = Backbone.RelationalModel.extend({});
+	var BehaviorIncident = Backbone.RelationalModel.extend({
+		relations: [{
+			type: Backbone.HasOne,
+			key: 'day',
+			relatedModel: DayRecord
+		},
+		{
+			type: Backbone.HasOne,
+			key: 'time',
+			relatedModel: TimeRecord
+		},
+		{
+			type: Backbone.HasOne,
+			key: 'behaviorType',
+			relatedModel: BehaviorType
+		}]
+	});
+
+	var DayRecordCollection = Backbone.Collection.extend({model: DayRecord});
+	var TimeRecordCollection = Backbone.Collection.extend({model: TimeRecord});
+	var BehaviorTypeCollection = Backbone.Collection.extend({model: BehaviorType});
+	var BehaviorIncidentCollection = Backbone.Collection.extend({model: BehaviorIncident});
+
 	var testInit = function() {
 		var anchor = moment(new Date(2013, 1, 1, 8, 30));
 		var end = moment(new Date(2013, 1, 1, 14, 31));
 
-		var timeBuckets = [];
+		var timeObjs = [];
 		var ctr = 1;
 		while(anchor < end) {
-			timeBuckets.push({
+			timeObjs.push({
 				'id': ctr++,
 				'iso_string': anchor.format('hh:mm')
 			});
 			anchor.add('minutes', 15);
 		}
 
-		var behaviorTypes = [
+		var timeRecords = new TimeRecordCollection(timeObjs);
+		var dayRecords = new DayRecordCollection([
 			{
-				id: 1,
+				iso_string: '2013-05-01'
+			}
+		]);
+		var behaviorTypes = new BehaviorTypeCollection([
+			{
 				code: 'P',
 				name: 'Pinch'
 			},
 			{
-				id: 2,
 				code: 'HS',
 				name: 'Happy Slap'
 			},
 			{
-				id: 3,
 				code: 'L',
 				name: 'Language'
 			}
-		];
+		]);
 
-		var behaviorIncidents = [
+		var behaviorIncidents = new BehaviorIncidentCollection([
 			{
-				behaviorTypeId: 1,
-				timeBucketId: 1,
+				behaviorType: behaviorTypes.findWhere({code: 'P'}),
+				time: timeRecords.findWhere({iso_string: '08:30'}),
+				day: dayRecords.findWhere({iso_string: '2013-05-01'}),
 				recorded_at: '2013-04-30T08:34:30.652Z'
 			},
 			{
-				behaviorTypeId: 2,
-				timeBucketId: 1,
+				behaviorType: behaviorTypes.findWhere({code: 'L'}),
+				time: timeRecords.findWhere({iso_string: '08:30'}),
+				day: dayRecords.findWhere({iso_string: '2013-05-01'}),
 				recorded_at: '2013-04-30T08:34:37.652Z'
 			},
 			{
-				behaviorTypeId: 2,
-				timeBucketId: 2,
+				behaviorType: behaviorTypes.findWhere({code: 'HS'}),
+				time: timeRecords.findWhere({iso_string: '08:45'}),
+				day: dayRecords.findWhere({iso_string: '2013-05-01'}),
 				recorded_at: '2013-04-30T08:34:37.652Z'
 			},
 			{
-				behaviorTypeId: 3,
-				timeBucketId: 3,
+				behaviorType: behaviorTypes.findWhere({code: 'L'}),
+				time: timeRecords.findWhere({iso_string: '09:00'}),
+				day: dayRecords.findWhere({iso_string: '2013-05-01'}),
 				recorded_at: '2013-04-30T08:34:37.652Z'
 			}
-		];
+		]);
 
 		return {
-			timeBuckets: timeBuckets,
+			timeRecords: timeRecords,
+			dayRecords: dayRecords,
 			behaviorTypes: behaviorTypes,
 			behaviorIncidents: behaviorIncidents
 		};
@@ -63,31 +97,55 @@ app.service('dataService', function() {
 
 	var _data = testInit();
 
-	this.getTimeBuckets = function() {
-		return _data.timeBuckets;
+	this.getTimeRecordCollection = function() {
+		return _data.timeRecords;
 	};
 
-	this.getBehaviorTypes = function() {
-		return _.map(_data.behaviorTypes, function(bType) {
-			return _.extend(_.clone(bType), {
-				// TODO: shouldn't be defining css classes in service, move out during refactor
-				cssClass: 'behavior-key-item-' + bType.id
-			});
-		});
+	this.getDayRecordCollection = function() {
+		return _data.dayRecords;
 	};
 
-	this.getIncidentsInBucket = function(timeBucketId) {
-		var records = _.filter(_data.behaviorIncidents, function(record) {
-			return record.timeBucketId === timeBucketId;
-		});
-
-		var incidents = _.map(records, function(record) {
-			return {
-				// TODO: shouldn't be defining css classes in service, move out during refactor
-				cssClass: 'behavior-incident-' + record.behaviorTypeId,
-				behaviorType: _data.behaviorTypes[record.behaviorTypeId-1]
-			};
-		});
-		return incidents;
+	this.getBehaviorTypeCollection = function() {
+		return _data.behaviorTypes;
 	};
+
+	this.getBehaviorIncidents = function() {
+		return _data.behaviorIncidents;
+	};
+
+	this.addBehaviorIncident = function(incidentModel) {
+		// TODO
+	};
+
+	this.types = {
+		BehaviorIncident: BehaviorIncident
+	};
+
+	// this.getTimeBuckets = function() {
+	// 	return _data.timeBuckets;
+	// };
+
+	// this.getBehaviorTypes = function() {
+	// 	return _.map(_data.behaviorTypes, function(bType) {
+	// 		return _.extend(_.clone(bType), {
+	// 			// TODO: shouldn't be defining css classes in service, move out during refactor
+	// 			cssClass: 'behavior-key-item-' + bType.id
+	// 		});
+	// 	});
+	// };
+
+	// this.getIncidentsInBucket = function(timeBucketId) {
+	// 	var records = _.filter(_data.behaviorIncidents, function(record) {
+	// 		return record.timeBucketId === timeBucketId;
+	// 	});
+
+	// 	var incidents = _.map(records, function(record) {
+	// 		return {
+	// 			// TODO: shouldn't be defining css classes in service, move out during refactor
+	// 			cssClass: 'behavior-incident-' + record.behaviorTypeId,
+	// 			behaviorType: _data.behaviorTypes[record.behaviorTypeId-1]
+	// 		};
+	// 	});
+	// 	return incidents;
+	// };
 });
