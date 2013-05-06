@@ -1,0 +1,35 @@
+<div class="app-panel app-panel-left">
+    <div class="datebar">
+        <button class="btn">&lt;</button>
+        <span class="datebar-label-date">Today</span>
+        <button class="btn disabled">&gt;</button>
+    </div>
+    <ul class="tracker">
+        <li class="tracker-bucket clearfix" data-ng-repeat="timeBucket in timeBuckets" data-ng-click="addBehaviorIncident(1, timeBucket._bucketId)">
+            <div class="tracker-bucket-time">{{timeBucket.timeRecord.iso_string}}</div>
+            <ul class="tracker-bucket-incidents">
+                <li class="behavior-incident {{incident.cssClass}}"
+                    data-ng-repeat="incident in timeBucket.incidents">
+                    {{incident.behaviorCode}}
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="app-panel app-panel-right">
+    <dl class="student-info well">
+        <dt>Student:</dt>
+        <dd>John Doe</dd>
+
+        <dt>Behaviors:</dt>
+        <dd class="behavior-keys">
+            <ul>
+                <li class="behavior-key-item {{behaviorType.cssClass}}"
+                    data-ng-repeat="behaviorType in behaviors">
+                    <span class="behavior-key-letter">{{behaviorType.code}}</span>
+                    <span class="behavior-key-title">{{behaviorType.name}}</span>
+                </li>
+            </ul>
+        </dd>
+    </dl>
+</div>

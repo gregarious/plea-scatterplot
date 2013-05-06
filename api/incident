@@ -1,0 +1,25 @@
+{
+	'results': [
+		{
+			'day': 1,
+			'behaviorTypeId': 1,
+			'timeBucketId': 1,
+			'recorded_at': '2013-04-30T08:34:30.652Z'
+		},
+		{
+			'behaviorTypeId': 2,
+			'timeBucketId': 1,
+			'recorded_at': '2013-04-30T08:34:37.652Z'
+		},
+		{
+			'behaviorTypeId': 2,
+			'timeBucketId': 2,
+			'recorded_at': '2013-04-30T08:34:37.652Z'
+		},
+		{
+			'behaviorTypeId': 3,
+			'timeBucketId': 3,
+			'recorded_at': '2013-04-30T08:34:37.652Z'
+		}
+	]
+}

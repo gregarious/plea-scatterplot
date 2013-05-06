@@ -1,0 +1,13 @@
+<div>
+    <ul class="behavior-keys">
+        <li class="behavior-key-item {{behaviorType.cssClass}}"
+            data-ng-repeat="behaviorType in behaviors">
+            <span class="behavior-key-letter">{{behaviorType.code}}</span>
+            <span class="behavior-key-title">{{behaviorType.name}}</span>
+            <span class="pull-right">
+                <i class="icon-pencil icon-white"></i>
+                <i class="icon-remove-sign icon-white"></i>
+            </span>
+        </li>
+    </ul>
+</div>
