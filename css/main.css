@@ -68,8 +68,8 @@ textarea {
    ========================================================================== */
 
 body {
-    width: 768px;
-    height: 946px;
+    width: 1024px; /*946px*/
+    height: 768px;
 
     margin-left: auto;
     margin-right: auto;
@@ -85,12 +85,12 @@ body {
 }
 
 .app-panel-left {
-    width: 60%;
+    width: 70%;
     background-color: #eee;
 }
 
 .app-panel-right {
-    width: 40%;
+    width: 30%;
     background-color: #ccc;
 }
 
@@ -113,9 +113,9 @@ body {
 
 .tracker-bucket {
     margin: 8px;
-    height: 72px;
+    height: 100px;
     border: 1px solid;
-    font-size: 24px;
+    font-size: 30px;
     
     background-color: #fff;
 
@@ -137,7 +137,7 @@ body {
 
 
 .tracker-bucket-time {
-    padding-top: 24px;
+    padding-top: 32px;
     text-align: center;
     background-color: #ddd;
     width: 20%;
@@ -151,8 +151,8 @@ body {
     border-radius: 6px;
 
     display: inline-block;
-    padding: 14px;
-    margin-top: 12px;
+    padding: 18px;
+    margin-top: 20px;
     margin-left: 20px;
 
     color: #eee;
@@ -263,6 +263,28 @@ body {
     margin-bottom: 0;
 }
 
+
+.behavior-display-toggler ul {
+    margin: 0;
+    display: inline-block;
+}
+
+.behavior-display-toggler li {
+    list-style: none;
+    display: inline-block;
+    border: 1px solid;
+    margin: 0 0.25em;
+    border-radius: 4px;
+}
+
+.behavior-display-toggler li input[type="checkbox"] {
+    margin: .5em;
+}
+
+.behavior-type-toggle-label {
+    display: inline-block;
+    margin-right: .5em;
+}
 
 .table-scatterplot {
     border-collapse: collapse;
