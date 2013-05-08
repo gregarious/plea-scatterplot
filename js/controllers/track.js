@@ -1,55 +1,49 @@
 app.controller('TrackerController', function($scope, dataService) {
-	var day = dataService.getDayRecordCollection().models[0];
+	var dayModel = dataService.getDayRecordCollection().models[0];
 
 	var init = function() {
 		$scope.currentDay = {
-			_model: day,
+			_model: dayModel,
 			label: 'Today'
 		};
 
-		$scope.behaviors = dataService.getBehaviorTypeCollection().map(behaviorM2VM);
+		$scope.behaviorCollection = dataService.getBehaviorTypeCollection();
 		var allIncidents = dataService.getBehaviorIncidents();
-		$scope.timeBuckets = dataService.getTimeRecordCollection().map(function(model) {
-			return {
-				_bucketId: model.id,
-				timeRecord: timeRecordM2VM(model),
-				incidents: _.map(allIncidents.where({time: model, day: day}), incidentM2VM)
+
+		/*
+		 * EntryBucket class
+		 */
+		function EntryBucket(timeBucketModel) {
+			this.timeBucketModel = timeBucketModel;
+			this.incidentModels = allIncidents.where({time: timeBucketModel, day: dayModel});
+
+			this.addIncident = function(behaviorTypeModel) {
+				behaviorTypeModel = $scope.behaviorCollection.get(Math.floor(Math.random() * $scope.behaviorCollection.size())+1);
+				var newIncidentModel = dataService.addBehaviorIncident(
+					behaviorTypeModel,
+					dayModel,
+					this.timeBucketModel
+				);
+
+				// TODO: only manual binding happening here. consider using BB binding to update this automatically?
+				this.incidentModels.push(newIncidentModel);
+
+				return newIncidentModel;
 			};
-		});
-	};
 
-	var timeRecordM2VM = function(model) {
-		return {
-			_model: model,
-			iso_string: model.get('iso_string')
-		};
-	};
+			this.removeIncident = function(behavior) {
+				console.log('removing');
+			};
 
-	var incidentM2VM = function(model) {
-		return {
-			_model: model,
-			behaviorCode: model.get('behaviorType').get('code'),
-			cssClass: 'behavior-incident-' + model.get('behaviorType').get('id')
-		};
-	};
-
-	var behaviorM2VM = function(model) {
-		return {
-			_model: model,
-			code: model.get('code'),
-			name: model.get('name'),
-			cssClass: 'behavior-key-item-' + model.get('id')
-		};
-	};
-
-	$scope.addBehaviorIncident = function(behaviorTypeId, timeBucketId) {
-		var timeRecordId = timeBucketId;
-		behaviorTypeId = Math.floor(Math.random() * 3)+1;
-		var newIncident = dataService.addBehaviorIncident(behaviorTypeId, day.id, timeRecordId);
-		bucket = _.where($scope.timeBuckets, {_bucketId: timeBucketId});
-		if (bucket.length)  {
-			bucket[0].incidents.push(incidentM2VM(newIncident));
+			this.incidentExists = function(behavior) {
+				console.log('incidentExists: ' + behavior);
+				return false;
+			};
 		}
+
+		$scope.entryBuckets = dataService.getTimeRecordCollection().map(function(timeBucket) {
+			return new EntryBucket(timeBucket);
+		});
 	};
 
 	init();

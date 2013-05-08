@@ -5,12 +5,12 @@
         <button class="btn disabled">&gt;</button>
     </div>
     <ul class="tracker">
-        <li class="tracker-bucket clearfix" data-ng-repeat="timeBucket in timeBuckets" data-ng-click="addBehaviorIncident(1, timeBucket._bucketId)">
-            <div class="tracker-bucket-time">{{timeBucket.timeRecord.iso_string}}</div>
+        <li class="tracker-bucket clearfix" data-ng-repeat="entryBucket in entryBuckets" data-ng-click="entryBucket.addIncident(null)">
+            <div class="tracker-bucket-time">{{entryBucket.timeBucketModel.get('iso_string')}}</div>
             <ul class="tracker-bucket-incidents">
-                <li class="behavior-incident {{incident.cssClass}}"
-                    data-ng-repeat="incident in timeBucket.incidents">
-                    {{incident.behaviorCode}}
+                <li data-ng-repeat="incidentModel in entryBucket.incidentModels"
+                    class="behavior-incident behavior-incident-{{incidentModel.get('behaviorType').id}}">
+                    {{incidentModel.get('behaviorType').get('code')}}
                 </li>
             </ul>
         </li>
@@ -24,10 +24,10 @@
         <dt>Behaviors:</dt>
         <dd class="behavior-keys">
             <ul>
-                <li class="behavior-key-item {{behaviorType.cssClass}}"
-                    data-ng-repeat="behaviorType in behaviors">
-                    <span class="behavior-key-letter">{{behaviorType.code}}</span>
-                    <span class="behavior-key-title">{{behaviorType.name}}</span>
+                <li data-ng-repeat="behaviorTypeModel in behaviorCollection.models"
+                    class="behavior-key-item behavior-key-item-{{behaviorTypeModel.id}}">
+                    <span class="behavior-key-letter">{{behaviorTypeModel.get('code')}}</span>
+                    <span class="behavior-key-title">{{behaviorTypeModel.get('name')}}</span>
                 </li>
             </ul>
         </dd>

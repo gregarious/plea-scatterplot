@@ -4,7 +4,8 @@ app.service('dataService', function() {
 	var TimeRecord = Backbone.RelationalModel.extend({});
 	var BehaviorType = Backbone.RelationalModel.extend({});
 	var BehaviorIncident = Backbone.RelationalModel.extend({
-		relations: [{
+		relations: [
+		{
 			type: Backbone.HasOne,
 			key: 'day',
 			relatedModel: DayRecord
@@ -53,6 +54,7 @@ app.service('dataService', function() {
 		var timeRecords = new TimeRecordCollection(timeObjs);
 		var dayRecords = new DayRecordCollection([
 			{
+				id: '1',
 				iso_string: '2013-05-01'
 			}
 		]);
@@ -127,11 +129,12 @@ app.service('dataService', function() {
 		return _data.behaviorIncidents;
 	};
 
-	this.addBehaviorIncident = function(typeId, dayId, timeId) {
-		return this.getBehaviorIncidents().create({
-			behaviorType: typeId,
-			time: timeId,
-			day: dayId
+	this.addBehaviorIncident = function(type, day, time) {
+		var i = _data.behaviorIncidents.create({
+			behaviorType: type,
+			time: time,
+			day: day
 		});
+		return i;
 	};
 });
