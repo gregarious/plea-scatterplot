@@ -2,7 +2,11 @@ app.service('dataService', function() {
 
 	var DayRecord = Backbone.RelationalModel.extend({});
 	var TimeRecord = Backbone.RelationalModel.extend({});
-	var BehaviorType = Backbone.RelationalModel.extend({});
+	var BehaviorType = Backbone.RelationalModel.extend({
+		defaults: {
+			'definition': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, consequuntur deleniti doloremque repellendus fuga debitis reprehenderit! Facilis.'
+		}
+	});
 	var BehaviorIncident = Backbone.RelationalModel.extend({
 		relations: [
 		{
@@ -27,7 +31,14 @@ app.service('dataService', function() {
 
 	var DayRecordCollection = Backbone.Collection.extend({model: DayRecord});
 	var TimeRecordCollection = Backbone.Collection.extend({model: TimeRecord});
-	var BehaviorTypeCollection = Backbone.Collection.extend({model: BehaviorType});
+	var BehaviorTypeCollection = Backbone.Collection.extend({
+		model: BehaviorType,
+		url: '/api/types',
+		parse: function(response) {
+			return response.results;
+		},
+		localStorage: new Backbone.LocalStorage("BehaviorTypes")
+	});
 	var BehaviorIncidentCollection = Backbone.Collection.extend({
 		model: BehaviorIncident,
 		url: '/api/incident',
@@ -130,11 +141,18 @@ app.service('dataService', function() {
 	};
 
 	this.addBehaviorIncident = function(type, day, time) {
-		var i = _data.behaviorIncidents.create({
+		return _data.behaviorIncidents.create({
 			behaviorType: type,
 			time: time,
 			day: day
 		});
-		return i;
+	};
+
+	this.addBehaviorType = function(code, name) {
+		return _data.behaviorTypes.create({
+			code: 'B',
+			name: 'Bad Behavior',
+			id: _data.behaviorTypes.length+1
+		});
 	};
 });

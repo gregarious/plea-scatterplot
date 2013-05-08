@@ -297,11 +297,35 @@ body {
     border: 1px solid;
 }
 
-
+.icon {
+    background-image: url("../img/bootstrap/glyphicons-halflings.png");
+}
 .icon-white {
     background-image: url("../img/bootstrap/glyphicons-halflings-white.png");
 }
 
+
+.manage-behavior-item {
+    color: #eee;
+    margin: 8px 0;
+    padding: 14px;
+}
+
+.manage-behavior-item-heading {
+    font-size: 24px;
+    color: #fff;
+}
+
+.manage-behavior-item-definition {
+    padding-top: 0.5em;
+    color: #fff;
+}
+
+.manage-behavior-item-new {
+    background-color: #ccc;
+    color: #000;
+    font-size: 20px;
+}
 
 /* ==========================================================================
    Helper classes

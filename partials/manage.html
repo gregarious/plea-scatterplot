@@ -1,13 +1,26 @@
-<div>
-    <ul class="behavior-keys">
-        <li class="behavior-key-item {{behaviorType.cssClass}}"
-            data-ng-repeat="behaviorType in behaviors">
-            <span class="behavior-key-letter">{{behaviorType.code}}</span>
-            <span class="behavior-key-title">{{behaviorType.name}}</span>
-            <span class="pull-right">
-                <i class="icon-pencil icon-white"></i>
-                <i class="icon-remove-sign icon-white"></i>
-            </span>
-        </li>
-    </ul>
+<div class="container">
+    <div data-ng-repeat="behaviorTypeModel in behaviorCollection.models" class="row">
+        <div class="span8 offset2">
+            <div class="manage-behavior-item behavior-key-item-{{behaviorTypeModel.id}}">
+                <div class="manage-behavior-item-heading">
+                    <span class="behavior-key-letter">{{behaviorTypeModel.get('code')}}</span>
+                    <span class="behavior-key-title">{{behaviorTypeModel.get('name')}}</span>
+                    <span class="manage-behavior-entry-buttons pull-right">
+                        <button class="btn btn-inverse"><i class="icon-pencil icon-white"></i></button>
+                        <button class="btn btn-inverse"><i class="icon-remove-sign icon-white"></i></button>
+                    </span>
+                </div>
+                <div class="manage-behavior-item-definition" data-ng-show="false">
+                    {{behaviorTypeModel.get('definition')}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span8 offset2">
+            <button class="btn manage-behavior-item manage-behavior-item-new span8 offset2" data-ng-click="addBehaviorType()">
+                Add New Behavior
+            </button>
+        </div>
+    </div>
 </div>
