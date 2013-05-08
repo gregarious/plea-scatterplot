@@ -8,64 +8,54 @@ app.controller('ScatterplotController', function($scope, dataService) {
 			};
 		};
 
-		$scope.behaviorTypes = {};
-		dataService.getBehaviorTypeCollection().each(function(model) {
-			console.log(model);
-			$scope.behaviorTypes[model.get('code')] = {
-				code: model.get('code'),
-				show: true
-			};
+		var allIncidents = dataService.getBehaviorIncidents();
+
+		function Cell(dayRecordModel, timeBucketModel) {
+			var incidentModels = allIncidents.where({
+				day: dayRecordModel,
+				time: timeBucketModel
+			});
+			this.behaviorTypeModels = _.map(incidentModels, function(model) {
+				return model.get('behaviorType');
+			});
+		}
+
+		function BehaviorTypeDisplay(behaviorTypeModel, show) {
+			if (_.isUndefined(show)) {
+				show = true;
+			}
+			this.show = show;
+			this.model = behaviorTypeModel;
+		}
+
+		$scope.behaviorTypeCollection = dataService.getBehaviorTypeCollection();
+
+		$scope.showBehaviorTypeStatus = {};
+		$scope.behaviorTypeCollection.each(function(typeModel) {
+			$scope.showBehaviorTypeStatus[typeModel.id] = true;
 		});
 
-		console.log($scope.behaviorTypes);
-
-		$scope.dayLabels = [
-			"4",
-			"5",
-			"6",
-			"7",
-			"8",
-			"9",
-			"10",
-			"11",
-			"12",
-			"13",
-			"14",
-			"15",
-			"16",
-			"17",
-			"18",
-			"19",
-			"20",
-			"21",
-			"22",
-			"23",
-			"24",
-			"25",
-			"26",
-			"27",
-			"28",
-			"29",
-			"30",
-			"31"
-		];
+		$scope.dayLabels = _.range(4,32);
 
 		$scope.grid = []; // 2d array: [time][day]
-		var incidents = dataService.getBehaviorIncidents();
-		var row;
+
+		var fixedDayModel = dataService.getDayRecordCollection().models[0];
 
 		dataService.getTimeRecordCollection().each(function(timeRecord) {
-			row = {
+			var row = {
 				time_string: timeRecord.get('iso_string'),
 				cells: []
 			};
-			for (var i = 1; i <= 4; i++) { row.cells.push([]); }
-			row.cells.push(_.map(incidents.where({
-				time: timeRecord
-			}), incidentM2VM));
-			for (i = 6; i <= 28; i++) { row.cells.push([]); }
+
+			for (var i = 4; i < 32; i++) {
+				var dayModel = i == 8 ? fixedDayModel: null;
+				row.cells.push(new Cell(dayModel, timeRecord));
+			}
+
 			$scope.grid.push(row);
 		});
+
+		_scope = $scope;
 	};
 
 	init();

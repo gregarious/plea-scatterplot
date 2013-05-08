@@ -1,9 +1,9 @@
 app.controller('TrackerController', function($scope, dataService) {
-	var dayModel = dataService.getDayRecordCollection().models[0];
+	var fixedDayModel = dataService.getDayRecordCollection().models[0];
 
 	var init = function() {
 		$scope.currentDay = {
-			_model: dayModel,
+			_model: fixedDayModel,
 			label: 'Today'
 		};
 
@@ -15,13 +15,13 @@ app.controller('TrackerController', function($scope, dataService) {
 		 */
 		function EntryBucket(timeBucketModel) {
 			this.timeBucketModel = timeBucketModel;
-			this.incidentModels = allIncidents.where({time: timeBucketModel, day: dayModel});
+			this.incidentModels = allIncidents.where({time: timeBucketModel, day: fixedDayModel});
 
 			this.addIncident = function(behaviorTypeModel) {
 				behaviorTypeModel = $scope.behaviorCollection.get(Math.floor(Math.random() * $scope.behaviorCollection.size())+1);
 				var newIncidentModel = dataService.addBehaviorIncident(
 					behaviorTypeModel,
-					dayModel,
+					fixedDayModel,
 					this.timeBucketModel
 				);
 

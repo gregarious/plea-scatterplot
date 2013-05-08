@@ -2,24 +2,26 @@
 <div class="behavior-display-toggler well">
 	<span>Show behaviors: </span>
 	<ul>
-		<li data-ng-repeat="behaviorType in behaviorTypes">
-			<label for="toggle-{{behaviorType.code}}" class="behavior-type-toggle-label">
-				<input type="checkbox" data-ng-model="behaviorType.show" id="toggle-{{behaviorType.code}}"/>
-			{{behaviorType.code}}</label>
+		<li data-ng-repeat="behaviorTypeModel in behaviorTypeCollection.models">
+			<label for="toggle-{{behaviorTypeModel.id}}" class="behavior-type-toggle-label">
+				<input type="checkbox" data-ng-model="showBehaviorTypeStatus[behaviorTypeModel.id]" id="toggle-{{behaviorTypeModel.id}}"/>
+			{{behaviorTypeModel.get('name')}}</label>
 		</li>
 	</ul>
 </div>
 <table class="table-scatterplot">
 	<tr>
-		<th>Time</th>
+		<th></th>
 		<th data-ng-repeat="day in dayLabels">{{day}}</th>
 	</tr>
 	<tr data-ng-repeat="row in grid">
 		<td>{{row.time_string}}</td>
 		<td data-ng-repeat="cell in row.cells">
-			<span class="{{incident.cssClass}}"
-                    data-ng-repeat="incident in cell">
-                    <strong data-ng-show="behaviorTypes[incident.behaviorCode].show">{{incident.behaviorCode}}</strong>
+			<span data-ng-repeat="behaviorTypeModel in cell.behaviorTypeModels"
+				  class="scatterplot-point-{{behaviorTypeModel.id}}">
+                    <strong data-ng-show="showBehaviorTypeStatus[behaviorTypeModel.id]">
+                    	{{behaviorTypeModel.get('code')}}
+                    </strong>
             </span>
 		</td>
 	</tr>
