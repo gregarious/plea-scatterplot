@@ -1,4 +1,4 @@
-var app = angular.module('app', []).
+var app = angular.module('app', ['$strap.directives']).
 	config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 		when('/track', {

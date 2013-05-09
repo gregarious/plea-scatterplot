@@ -5,7 +5,7 @@
         <button class="btn disabled">&gt;</button>
     </div>
     <ul class="tracker">
-        <li class="tracker-bucket clearfix" data-ng-repeat="entryBucket in entryBuckets" data-ng-click="entryBucket.addIncident(null)">
+        <li class="tracker-bucket clearfix" data-ng-repeat="entryBucket in entryBuckets" bs-popover="'partials/popover.html'" data-unique="1">
             <div class="tracker-bucket-time">{{entryBucket.timeBucketModel.get('iso_string')}}</div>
             <ul class="tracker-bucket-incidents">
                 <li data-ng-repeat="incidentModel in entryBucket.incidentModels"

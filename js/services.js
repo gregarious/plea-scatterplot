@@ -148,6 +148,11 @@ app.service('dataService', function() {
 		});
 	};
 
+	this.removeBehaviorIncident = function(incident) {
+		_data.behaviorIncidents.remove(incident);
+		// TODO: need to destory incident. simple destroy() fails for dynamically added incidents.
+	};
+
 	this.addBehaviorType = function(code, name) {
 		return _data.behaviorTypes.create({
 			code: 'B',

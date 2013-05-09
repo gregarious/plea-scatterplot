@@ -1,3 +1,9 @@
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
 app.controller('TrackerController', function($scope, dataService) {
 	var fixedDayModel = dataService.getDayRecordCollection().models[0];
 
@@ -18,25 +24,47 @@ app.controller('TrackerController', function($scope, dataService) {
 			this.incidentModels = allIncidents.where({time: timeBucketModel, day: fixedDayModel});
 
 			this.addIncident = function(behaviorTypeModel) {
-				behaviorTypeModel = $scope.behaviorCollection.get(Math.floor(Math.random() * $scope.behaviorCollection.size())+1);
 				var newIncidentModel = dataService.addBehaviorIncident(
 					behaviorTypeModel,
 					fixedDayModel,
 					this.timeBucketModel
 				);
 
-				// TODO: only manual binding happening here. consider using BB binding to update this automatically?
+				// TODO: manual binding happening here. consider using BB binding to update this automatically?
 				this.incidentModels.push(newIncidentModel);
 
 				return newIncidentModel;
 			};
 
 			this.removeIncident = function(behavior) {
-				console.log('removing');
+				var remIndices = [];
+				for (var i = 0; i < this.incidentModels.length; i++) {
+					if (this.incidentModels[i].get('behaviorType') === behavior) {
+						console.log('removing');
+						dataService.removeBehaviorIncident(this.incidentModels[i]);
+						remIndices.push(i);
+					}
+				}
+
+				for (i = remIndices.length - 1; i >= 0; i--) {
+					this.incidentModels.remove(remIndices[i]);
+				}
+			};
+
+			this.toggleIncident = function(behavior) {
+				if (this.incidentExists(behavior)) {
+					this.removeIncident(behavior);
+				}
+				else {
+					this.addIncident(behavior);
+				}
 			};
 
 			this.incidentExists = function(behavior) {
-				console.log('incidentExists: ' + behavior);
+				for (var i = 0; i < this.incidentModels.length; i++) {
+					if (this.incidentModels[i].get('behaviorType') === behavior)
+						return true;
+				}
 				return false;
 			};
 		}

@@ -147,6 +147,19 @@ body {
     width: 80%;
 }
 
+.btn-behavior {
+    border-radius: 6px;
+
+    display: inline-block;
+    padding: 18px;
+
+    color: #eee;
+}
+
+.btn-behavior-chosen {
+    background-color: rgb(192, 192, 192) !important;
+}
+
 .behavior-incident {
     border-radius: 6px;
 
@@ -165,7 +178,8 @@ body {
 }
 
 .behavior-incident-1,
-.behavior-key-item-1 {
+.behavior-key-item-1,
+.btn-behavior-1 {
     background-color: #c44;
 }
 .scatterplot-point-1 {
@@ -173,7 +187,8 @@ body {
 }
 
 .behavior-incident-2,
-.behavior-key-item-2 {
+.behavior-key-item-2,
+.btn-behavior-2 {
     background-color: #4c4;
 }
 .scatterplot-point-2 {
@@ -182,7 +197,8 @@ body {
 
 
 .behavior-incident-3,
-.behavior-key-item-3 {
+.behavior-key-item-3,
+.btn-behavior-3 {
     background-color: #44c;
 }
 .scatterplot-point-3 {
@@ -190,7 +206,8 @@ body {
 }
 
 .behavior-incident-4,
-.behavior-key-item-4 {
+.behavior-key-item-4,
+.btn-behavior-4 {
     background-color: #c4c;
 }
 .scatterplot-point-4 {
@@ -198,7 +215,8 @@ body {
 }
 
 .behavior-incident-5,
-.behavior-key-item-5 {
+.behavior-key-item-5,
+.btn-behavior-5 {
     background-color: #cc4;
 }
 .scatterplot-point-5 {
@@ -206,7 +224,8 @@ body {
 }
 
 .behavior-incident-6,
-.behavior-key-item-6 {
+.behavior-key-item-6,
+.btn-behavior-6 {
     background-color: #4cc;
 }
 .scatterplot-point-6 {
