@@ -1,8 +1,8 @@
 <p>Add/remove behavior incident:</p>
 <div data-ng-repeat="behaviorTypeModel in behaviorCollection.models" style="display:inline">
-	<button data-ng-click="entryBucket.toggleIncident(behaviorTypeModel)"
+	<button data-ng-click="entryBucket.toggleIncident(behaviorTypeModel); hide();"
 			class="btn-behavior btn-behavior-{{behaviorTypeModel.id}}" 
-			data-ng-class="{'btn-behavior-chosen': entryBucket.incidentExists(behaviorTypeModel)}">
+			data-ng-class="{'btn-behavior-unchosen': !entryBucket.incidentExists(behaviorTypeModel)}">
 		{{behaviorTypeModel.get('code')}}
 	</button>
 </div>
