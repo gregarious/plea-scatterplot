@@ -149,9 +149,13 @@ body {
 
 .btn-behavior {
     border-radius: 6px;
+    font-size: 24px;
+    min-width: 44px;
+    min-height: 44px;
 
     display: inline-block;
     padding: 18px;
+    margin-right: 10px;
 
     color: #eee;
 }
@@ -275,6 +279,8 @@ body {
 }
 .btn-scatterplot {
     margin: 12px;
+    min-width: 44px;
+    min-height: 44px;
 }
 
 
