@@ -6,11 +6,13 @@
     </div>
     <ul class="tracker">
         <li class="tracker-bucket clearfix" data-ng-repeat="entryBucket in entryBuckets" bs-popover="'partials/popover.html'" data-unique="1">
-            <div class="tracker-bucket-time">{{entryBucket.timeBucketModel.get('iso_string')}}</div>
+            <div class="tracker-bucket-time">{{entryBucket.time_string}}</div>
             <ul class="tracker-bucket-incidents">
-                <li data-ng-repeat="incidentModel in entryBucket.incidentModels"
-                    class="behavior-incident behavior-incident-{{incidentModel.get('behaviorType').id}}">
-                    {{incidentModel.get('behaviorType').get('code')}}
+                <li data-ng-repeat="marker in entryBucket.markers"
+                    class="behavior-incident behavior-incident-{{marker.behaviorTypeId}}" data-ng-show="marker.count">
+                    <div data-ng-switch on="marker.tallyMode">
+                        <span data-ng-switch-when="true">{{marker.code}} | {{marker.count}}</span>
+                        <span data-ng-switch-default>{{marker.code}}</span>
                 </li>
             </ul>
         </li>
@@ -24,10 +26,13 @@
         <dt>Behaviors:</dt>
         <dd class="behavior-keys">
             <ul>
-                <li data-ng-repeat="behaviorTypeModel in behaviorCollection.models"
-                    class="behavior-key-item behavior-key-item-{{behaviorTypeModel.id}}">
-                    <span class="behavior-key-letter">{{behaviorTypeModel.get('code')}}</span>
-                    <span class="behavior-key-title">{{behaviorTypeModel.get('name')}}</span>
+                <li data-ng-repeat="behaviorButton in behaviorButtons"
+                    data-ng-click="behaviorButton.onTap()"
+                    class="behavior-key-item behavior-key-item-{{behaviorButton.behaviorTypeId}}">
+                    <span class="behavior-key-letter">{{behaviorButton.code}}</span>
+                    <span class="behavior-key-title">{{behaviorButton.name}}</span>
+                    
+                    <p data-ng-show="behaviorButton.tallyMode" style="text-align: right; margin-top: 10px; margin-bottom: 0;"><small><em>Tally mode on</em></small></p>
                 </li>
             </ul>
         </dd>

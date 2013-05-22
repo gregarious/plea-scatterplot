@@ -4,7 +4,8 @@ app.service('dataService', function() {
 	var TimeRecord = Backbone.RelationalModel.extend({});
 	var BehaviorType = Backbone.RelationalModel.extend({
 		defaults: {
-			'definition': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, consequuntur deleniti doloremque repellendus fuga debitis reprehenderit! Facilis.'
+			'definition': 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque, consequuntur deleniti doloremque repellendus fuga debitis reprehenderit! Facilis.',
+			tallyMode: false
 		}
 	});
 	var BehaviorIncident = Backbone.RelationalModel.extend({
@@ -73,21 +74,26 @@ app.service('dataService', function() {
 			{
 				id: '1',
 				code: 'P',
-				name: 'Pinch'
+				name: 'Pinch',
+				tallyMode: false
 			},
 			{
 				id: '2',
 				code: 'HS',
-				name: 'Happy Slap'
+				name: 'Happy Slap',
+				tallyMode: true
 			},
 			{
 				id: '3',
 				code: 'L',
-				name: 'Language'
+				name: 'Language',
+				tallyMode: false
 			}
 		]);
 
-		var behaviorIncidents = new BehaviorIncidentCollection([
+		var behaviorIncidents = new BehaviorIncidentCollection();
+
+		behaviorIncidents = new BehaviorIncidentCollection([
 			{
 				behaviorType: behaviorTypes.findWhere({code: 'P'}),
 				time: timeRecords.findWhere({iso_string: '08:30'}),
@@ -104,14 +110,26 @@ app.service('dataService', function() {
 				behaviorType: behaviorTypes.findWhere({code: 'HS'}),
 				time: timeRecords.findWhere({iso_string: '08:45'}),
 				day: dayRecords.findWhere({iso_string: '2013-05-01'}),
-				recorded_at: '2013-04-30T08:34:37.652Z'
+				recorded_at: '2013-04-30T08:40:37.652Z'
+			},
+			{
+				behaviorType: behaviorTypes.findWhere({code: 'HS'}),
+				time: timeRecords.findWhere({iso_string: '08:45'}),
+				day: dayRecords.findWhere({iso_string: '2013-05-01'}),
+				recorded_at: '2013-04-30T08:41:37.652Z'
 			},
 			{
 				behaviorType: behaviorTypes.findWhere({code: 'L'}),
 				time: timeRecords.findWhere({iso_string: '09:00'}),
 				day: dayRecords.findWhere({iso_string: '2013-05-01'}),
-				recorded_at: '2013-04-30T08:34:37.652Z'
-			}
+				recorded_at: '2013-04-30T09:14:37.652Z'
+			},
+			{
+				behaviorType: behaviorTypes.findWhere({code: 'HS'}),
+				time: timeRecords.findWhere({iso_string: '09:00'}),
+				day: dayRecords.findWhere({iso_string: '2013-05-01'}),
+				recorded_at: '2013-04-30T09:11:37.652Z'
+			},
 		]);
 
 		return {
