@@ -15,7 +15,7 @@
                     data-ng-show="marker.count"
                     class="behavior-incident behavior-incident-{{marker.behaviorTypeId}}">
                     <div data-ng-switch on="marker.tallyMode">
-                        <span data-ng-switch-when="true">{{marker.code}} | {{marker.count}}</span>
+                        <span data-ng-switch-when="true">{{marker.code}}: {{marker.count}}</span>
                         <span data-ng-switch-default>{{marker.code}}</span>
                 </li>
             </ul>
@@ -34,10 +34,14 @@
                         <span class="behavior-key-letter">{{behaviorButton.code}}</span>
                         <span class="behavior-key-title">{{behaviorButton.name}}</span>
                         
-                        <p data-ng-show="behaviorButton.tallyMode" style="text-align: right; margin-top: 10px; margin-bottom: 0;"><small><em>Tally mode on</em></small></p>
+                        <p data-ng-show="behaviorButton.tallyMode" style="text-align: right; margin-top: 10px; margin-bottom: 0;"><small><em>Recording tallies</em></small></p>
                     </button>
                 </li>
             </ul>
+            <br/>
+            <a class="btn btn-large" href="/#/manage">
+                Edit Behaviors
+            </a>
         </dd>
     </dl>
 </div>

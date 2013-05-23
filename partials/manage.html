@@ -6,10 +6,10 @@
                     <span class="behavior-key-letter">{{behaviorTypeModel.get('code')}}</span>
                     <span class="behavior-key-title">{{behaviorTypeModel.get('name')}}</span>
                     <span class="manage-behavior-entry-buttons pull-right">
-                        <button>
+                        <button class="btn btn-inverse">
                             <label for="tallymode-{{behaviorTypeModel.id}}">
-                                Tally mode: 
                                 <input type="checkbox" data-ng-model="behaviorTypeModel.attributes.tallyMode" id="tallymode-{{behaviorTypeModel.id}}"/>
+                                &nbsp;&nbsp;Record tallies
                             </label>
                         </button>
                         <button class="btn btn-inverse"><i class="icon-pencil icon-white"></i></button>
