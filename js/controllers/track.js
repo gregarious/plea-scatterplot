@@ -7,9 +7,9 @@ Array.prototype.remove = function(from, to) {
 app.controller('TrackerController', function($scope, dataService) {
 	var fixedDayModel = dataService.getDayRecordCollection().models[0];
 
-	behaviorTypeCollection = dataService.getBehaviorTypeCollection();
-	behaviorIncidentCollection = dataService.getBehaviorIncidents();
-	timeRecordCollection = dataService.getTimeRecordCollection();
+	var behaviorTypeCollection = dataService.getBehaviorTypeCollection();
+	var behaviorIncidentCollection = dataService.getBehaviorIncidents();
+	var timeRecordCollection = dataService.getTimeRecordCollection();
 
 	// view model functions
 	function EntryBucket(timeRecord, behaviorTypes, behaviorIncidents) {
@@ -58,8 +58,8 @@ app.controller('TrackerController', function($scope, dataService) {
 		var behaviorTypeModel = behaviorTypeCollection.get(behaviorTypeId);
 		var timeRecordModel = timeRecordCollection.get(timeRecordId);
 		if (!behaviorTypeModel || !timeRecordModel) {
-			console.error('invalid ids. cannot get incidents')
-		}		
+			console.error('invalid ids. cannot get incidents');
+		}
 		return behaviorIncidentCollection.where({time: timeRecordModel, day: fixedDayModel, behaviorType: behaviorTypeModel});
 	}
 
@@ -67,7 +67,7 @@ app.controller('TrackerController', function($scope, dataService) {
 		var behaviorTypeModel = behaviorTypeCollection.get(behaviorTypeId);
 		var timeRecordModel = timeRecordCollection.get(timeRecordId);
 		if (!behaviorTypeModel || !timeRecordModel) {
-			console.error('invalid ids. cannot add incident')
+			console.error('invalid ids. cannot add incident');
 		}
 		var newIncidentModel = dataService.addBehaviorIncident(
 			behaviorTypeModel, fixedDayModel, timeRecordModel);
@@ -128,7 +128,7 @@ app.controller('TrackerController', function($scope, dataService) {
 					if (incidents.length > 0 && !button.tallyMode) {
 						button.isDepressed = true;
 					}
-				}	
+				}
 			});
 		};
 
@@ -147,7 +147,6 @@ app.controller('TrackerController', function($scope, dataService) {
 				removeIncident(behaviorTypeId, timeRecordId);
 			}
 
-			
 			_.each($scope.behaviorButtons, function(button) {
 				button.isDepressed = false;
 				if ($scope.activeBucket) {
@@ -155,7 +154,7 @@ app.controller('TrackerController', function($scope, dataService) {
 					if (incidents.length > 0 && !button.tallyMode) {
 						button.isDepressed = true;
 					}
-				}	
+				}
 			});
 		};
 
@@ -163,10 +162,9 @@ app.controller('TrackerController', function($scope, dataService) {
 		var initialActiveBucket = null;
 		var timeNow = '09:03';//moment().format('hh:mm');
 		for (var i = 0; i < $scope.entryBuckets.length; ++i) {
-			console.log(timeNow + ' >? ' + $scope.entryBuckets[i].isoTimeString);
 			if (timeNow < $scope.entryBuckets[i].isoTimeString) {
 				break;
-			} 
+			}
 			else {
 				initialActiveBucket = $scope.entryBuckets[i];
 			}
@@ -178,64 +176,4 @@ app.controller('TrackerController', function($scope, dataService) {
 	}
 
 	init();
-
-	_glob = behaviorIncidentCollection;
 });
-
-		// /*
-		//  * EntryBucket class
-		//  */
-		// function EntryBucket(timeBucketModel) {
-		// 	this.timeBucketModel = timeBucketModel;
-		// 	this.incidentModels = allIncidents.where({time: timeBucketModel, day: fixedDayModel});
-
-		// 	this.addIncident = function(behaviorTypeModel) {
-		// 		var newIncidentModel = dataService.addBehaviorIncident(
-		// 			behaviorTypeModel,
-		// 			fixedDayModel,
-		// 			this.timeBucketModel
-		// 		);
-
-		// 		// TODO: manual binding happening here. consider using BB binding to update this automatically?
-		// 		this.incidentModels.push(newIncidentModel);
-
-		// 		return newIncidentModel;
-		// 	};
-
-		// 	this.removeIncident = function(behavior) {
-		// 		var remIndices = [];
-		// 		for (var i = 0; i < this.incidentModels.length; i++) {
-		// 			if (this.incidentModels[i].get('behaviorType') === behavior) {
-		// 				console.log('removing');
-		// 				dataService.removeBehaviorIncident(this.incidentModels[i]);
-		// 				remIndices.push(i);
-		// 			}
-		// 		}
-
-		// 		for (i = remIndices.length - 1; i >= 0; i--) {
-		// 			this.incidentModels.remove(remIndices[i]);
-		// 		}
-		// 	};
-
-		// 	this.toggleIncident = function(behavior) {
-		// 		if (this.incidentExists(behavior)) {
-		// 			this.removeIncident(behavior);
-		// 		}
-		// 		else {
-		// 			this.addIncident(behavior);
-		// 		}
-		// 	};
-
-		// 	this.incidentExists = function(behavior) {
-		// 		for (var i = 0; i < this.incidentModels.length; i++) {
-		// 			if (this.incidentModels[i].get('behaviorType') === behavior)
-		// 				return true;
-		// 		}
-		// 		return false;
-		// 	};
-		// }
-
-		// $scope.entryBuckets = dataService.getTimeRecordCollection().map(function(timeBucket) {
-		// 	return new EntryBucket(timeBucket);
-		// });
-	// };
