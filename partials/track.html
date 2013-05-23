@@ -5,11 +5,15 @@
         <button class="btn disabled">&gt;</button>
     </div>
     <ul class="tracker">
-        <li class="tracker-bucket clearfix" data-ng-repeat="entryBucket in entryBuckets" bs-popover="'partials/popover.html'" data-unique="1">
-            <div class="tracker-bucket-time">{{entryBucket.time_string}}</div>
+        <li class="tracker-bucket clearfix"
+            data-ng-class="{'active': activeBucket.timeRecordId == entryBucket.timeRecordId}"
+            data-ng-repeat="entryBucket in entryBuckets"
+            data-ng-click="setActiveBucket(entryBucket)">
+            <div class="tracker-bucket-time">{{entryBucket.isoTimeString}}</div>
             <ul class="tracker-bucket-incidents">
                 <li data-ng-repeat="marker in entryBucket.markers"
-                    class="behavior-incident behavior-incident-{{marker.behaviorTypeId}}" data-ng-show="marker.count">
+                    data-ng-show="marker.count"
+                    class="behavior-incident behavior-incident-{{marker.behaviorTypeId}}">
                     <div data-ng-switch on="marker.tallyMode">
                         <span data-ng-switch-when="true">{{marker.code}} | {{marker.count}}</span>
                         <span data-ng-switch-default>{{marker.code}}</span>
@@ -27,7 +31,7 @@
         <dd class="behavior-keys">
             <ul>
                 <li data-ng-repeat="behaviorButton in behaviorButtons"
-                    data-ng-click="behaviorButton.onTap()"
+                    data-ng-click="behaviorTapped(behaviorButton.behaviorTypeId)"
                     class="behavior-key-item behavior-key-item-{{behaviorButton.behaviorTypeId}}">
                     <span class="behavior-key-letter">{{behaviorButton.code}}</span>
                     <span class="behavior-key-title">{{behaviorButton.name}}</span>
