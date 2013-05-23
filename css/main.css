@@ -147,8 +147,13 @@ body {
     width: 80%;
 }
 
+.tracker-bucket {
+    opacity: 0.5;
+}
+
 .tracker-bucket.active {
     background-color: #fffacd;
+    opacity: 1.0;
 }
 
 .tracker-bucket.active > .tracker-bucket-time {
@@ -187,6 +192,7 @@ body {
 
 .behavior-keys > ul {
     margin: 0;
+    list-style: none;
 }
 
 .behavior-incident-1,
@@ -248,6 +254,7 @@ body {
 .student-info {
     margin: 12px;
     font-size: 18px;
+    background-color: #fffacd;
 }
 
 .student-info dt {
@@ -261,12 +268,18 @@ body {
     font-size: 24px;
     margin: 8px 0;
     padding: 14px;
+    width: 100%;
+    text-align: left;
 
     list-style: none;
 }
 
 .behavior-key-item {
     color: #eee;
+}
+
+.behavior-key-item.depressed {
+    opacity: 0.5;
 }
 
 .behavior-key-letter {

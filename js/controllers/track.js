@@ -43,9 +43,16 @@ app.controller('TrackerController', function($scope, dataService) {
 		this.name = behaviorType.get('name');
 		this.tallyMode = behaviorType.get('tallyMode');
 		this.behaviorTypeId = behaviorType.id;
-		this.isDisabled = false;
+		this.isDepressed = false;
 	}
 
+	/*** NOTE: these next 4 functions are a bit verbose, mostly as a result of there
+		being a complete separation between the Backbone-based model layer and the 
+		scope viewmodel Javascript objects.
+
+		Once this interface is refactored, the amount of boilerplate and 
+		explicitness of these functions will hopefully not be necessary anymore.
+	***/
 
 	function getIncidents(behaviorTypeId, timeRecordId) {
 		var behaviorTypeModel = behaviorTypeCollection.get(behaviorTypeId);
@@ -84,7 +91,6 @@ app.controller('TrackerController', function($scope, dataService) {
 		}
 	}
 
-	// this function is an artifact of bad design. get rid of after refactoring
 	function getEntryBucketForTimeId(timeRecordId) {
 		var matches = _.where($scope.entryBuckets, {timeRecordId: timeRecordId});
 		if (matches.length > 0) {
@@ -111,21 +117,19 @@ app.controller('TrackerController', function($scope, dataService) {
 			);
 		});
 
-		// determine which bucket is active at first
-		$scope.activeBucket = null;
-		var timeNow = '09:03';//moment().format('hh:mm');
-		for (var i = 0; i < $scope.entryBuckets.length; ++i) {
-			console.log(timeNow + ' >? ' + $scope.entryBuckets[i].isoTimeString);
-			if (timeNow < $scope.entryBuckets[i].isoTimeString) {
-				break;
-			} 
-			else {
-				$scope.activeBucket = $scope.entryBuckets[i];
-			}
-		}
-
 		$scope.setActiveBucket = function(entryBucket) {
 			$scope.activeBucket = entryBucket;
+
+			// NOTE: This could use some refactoring. Not declarative at all.
+			_.each($scope.behaviorButtons, function(button) {
+				button.isDepressed = false;
+				if ($scope.activeBucket) {
+					var incidents = getIncidents(button.behaviorTypeId, $scope.activeBucket.timeRecordId);
+					if (incidents.length > 0 && !button.tallyMode) {
+						button.isDepressed = true;
+					}
+				}	
+			});
 		};
 
 		$scope.behaviorTapped = function(behaviorTypeId) {
@@ -142,7 +146,35 @@ app.controller('TrackerController', function($scope, dataService) {
 			else {
 				removeIncident(behaviorTypeId, timeRecordId);
 			}
+
+			
+			_.each($scope.behaviorButtons, function(button) {
+				button.isDepressed = false;
+				if ($scope.activeBucket) {
+					var incidents = getIncidents(button.behaviorTypeId, $scope.activeBucket.timeRecordId);
+					if (incidents.length > 0 && !button.tallyMode) {
+						button.isDepressed = true;
+					}
+				}	
+			});
 		};
+
+		// determine which bucket is active at first
+		var initialActiveBucket = null;
+		var timeNow = '09:03';//moment().format('hh:mm');
+		for (var i = 0; i < $scope.entryBuckets.length; ++i) {
+			console.log(timeNow + ' >? ' + $scope.entryBuckets[i].isoTimeString);
+			if (timeNow < $scope.entryBuckets[i].isoTimeString) {
+				break;
+			} 
+			else {
+				initialActiveBucket = $scope.entryBuckets[i];
+			}
+		}
+		if (initialActiveBucket) {
+			$scope.setActiveBucket(initialActiveBucket);
+		}
+
 	}
 
 	init();

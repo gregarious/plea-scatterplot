@@ -24,19 +24,18 @@
 </div>
 <div class="app-panel app-panel-right">
     <dl class="student-info well">
-        <dt>Student:</dt>
-        <dd>John Doe</dd>
-
         <dt>Behaviors:</dt>
         <dd class="behavior-keys">
             <ul>
-                <li data-ng-repeat="behaviorButton in behaviorButtons"
-                    data-ng-click="behaviorTapped(behaviorButton.behaviorTypeId)"
-                    class="behavior-key-item behavior-key-item-{{behaviorButton.behaviorTypeId}}">
-                    <span class="behavior-key-letter">{{behaviorButton.code}}</span>
-                    <span class="behavior-key-title">{{behaviorButton.name}}</span>
-                    
-                    <p data-ng-show="behaviorButton.tallyMode" style="text-align: right; margin-top: 10px; margin-bottom: 0;"><small><em>Tally mode on</em></small></p>
+                <li data-ng-repeat="behaviorButton in behaviorButtons">
+                    <button class="behavior-key-item behavior-key-item-{{behaviorButton.behaviorTypeId}}"
+                    data-ng-class="{depressed: behaviorButton.isDepressed}"
+                    data-ng-click="behaviorTapped(behaviorButton.behaviorTypeId)">
+                        <span class="behavior-key-letter">{{behaviorButton.code}}</span>
+                        <span class="behavior-key-title">{{behaviorButton.name}}</span>
+                        
+                        <p data-ng-show="behaviorButton.tallyMode" style="text-align: right; margin-top: 10px; margin-bottom: 0;"><small><em>Tally mode on</em></small></p>
+                    </button>
                 </li>
             </ul>
         </dd>
