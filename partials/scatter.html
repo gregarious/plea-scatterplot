@@ -1,13 +1,11 @@
 
 <div class="behavior-display-toggler well">
-	<span>Show behaviors: </span>
-	<ul>
-		<li data-ng-repeat="behaviorTypeModel in behaviorTypeCollection.models">
-			<label for="toggle-{{behaviorTypeModel.id}}" class="behavior-type-toggle-label">
-				<input type="checkbox" data-ng-model="showBehaviorTypeStatus[behaviorTypeModel.id]" id="toggle-{{behaviorTypeModel.id}}"/>
-			{{behaviorTypeModel.get('name')}}</label>
-		</li>
-	</ul>
+	<label for="behavior-picker">Show behavior: </label>
+	<select data-ng-model="selectedBehaviorType" data-ng-options="b.label for b in behaviorTypes"></select>
+	<label for="tally-mode-checkbox">
+		Show tallies:
+		<input type="checkbox" data-ng-model="tallyMode" />
+	</label>
 </div>
 <table class="table-scatterplot">
 	<tr>
@@ -15,12 +13,13 @@
 		<th data-ng-repeat="day in dayLabels">{{day}}</th>
 	</tr>
 	<tr data-ng-repeat="row in grid">
-		<td>{{row.time_string}}</td>
+		<td>{{row.isoTimeString}}</td>
 		<td data-ng-repeat="cell in row.cells">
-			<span data-ng-repeat="behaviorTypeModel in cell.behaviorTypeModels"
-				  class="scatterplot-point-{{behaviorTypeModel.id}}">
-                    <strong data-ng-show="showBehaviorTypeStatus[behaviorTypeModel.id]">
-                    	{{behaviorTypeModel.get('code')}}
+			<span data-ng-repeat="marker in cell.markers"
+				  class="scatterplot-point-{{marker.behaviorTypeId}}">
+                    <strong data-ng-show="selectedBehaviorType.id == 0 || selectedBehaviorType.id == marker.behaviorTypeId">
+                    	<span data-ng-show="!tallyMode">{{marker.code}}</span>
+                    	<span data-ng-show="tallyMode">{{marker.count}}</span>
                     </strong>
             </span>
 		</td>
